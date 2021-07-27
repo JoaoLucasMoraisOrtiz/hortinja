@@ -1,0 +1,27 @@
+{
+  "name": "kazap_academi_fanpics",
+  "version": "1.0.0",
+  "description": "Primeira API do Kazap Academy 2021",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoaoLucasMoraisOrtiz/kazap_academi_fanpics.git"
+  },
+  "author": "João Lucas Morais Ortiz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JoaoLucasMoraisOrtiz/kazap_academi_fanpics/issues"
+  },
+  "homepage": "https://github.com/JoaoLucasMoraisOrtiz/kazap_academi_fanpics#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "helmet": "^4.6.0",
+    "http-status": "^1.5.0",
+    "mongodb": "^4.0.0"
+  }
+}
