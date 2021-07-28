@@ -136,6 +136,10 @@ import DeleteModal from './DeleteModal'
 //importa Api
 import api from '../../services/api' 
 
+import steps from '../helpers/Steps'
+import count from '../helpers/Count'
+
+
 /* exporta a constante Home, que recebe uma função */
 export const Home = () => {
 
@@ -174,6 +178,7 @@ export const Home = () => {
       .then(res => {
         /* quando funciona setPosts recebe res.data */
         setPosts(res.data)
+        console.log(posts)
       })
 
       /* como não tratamos erros no then, os trataremos no catch */
@@ -210,6 +215,16 @@ export const Home = () => {
     /* setPostModal, que era false, torna-se true */
     setPostModal(true)
   }
+
+  useEffect(() => {
+    loadPosts()
+   /*  let allcategorys = count(posts)
+    console.log(allcategorys) */
+    console.log(`posts de useEffect${posts.categoryId}`)
+    let categorys = steps(posts)
+    console.log(categorys)
+  }, [])
+ 
 
   /*
     sempre que qualquer estado se mudar (pois deixamos o segundo parâmetro vazio),
@@ -293,9 +308,6 @@ export const Home = () => {
             >
               {/* texto do título */}
               <Image src={Bg1} alt="plano de fundo" width="100%" height="100%"/>
-
-              {/* {/* divisor horizontal 
-              <Divider marginY='2' /> */}
               
               <Flex
                 flexDirection='row'
@@ -368,18 +380,31 @@ export const Home = () => {
               </Flex>
             ) : (
               <Flex 
-              flexDirection='column'
-              ml={['0', '4', '4', '4']}
+              flexDirection='row'
+              marginTop = '30%'
+              marginLeft={['0', '4', '4', '4']}
+
               >
+                
                 {/*
-                  dando um map em posts;
+                  dando um map em posts (linha 152);
                     o map chama uma callback, que deve ser uma função, que receberá por parâmetro
                     um item de um array (um por vez, em sequencia de ordem crescente).
                     a partir od parâmetro desta função callback, podemos trabalhar o dado.
-                    No caso abaixo, o parâmetro está retornando uma nova tag <Post/> que contem
-                    os dados do post do DB.
+                    No caso abaixo, o que está acontecendo depende inteiramente da linha 218-220;
+                    Basicamente para relembrar, estas linhas chamam a func. "loadPost()" que determina
+                    o valor de "setPost()" (linha 151-152), ao qual determina um "useState()" (linha 1)
+                    para "posts". Este state será uma array com os JSON dos cards posts que a API
+                    retorna quando fazemos uma req. "GET" em /posts (vide: API/src/routes).
+                    resumindo, "posts" é uma array onde cada elemento é um JSON com as informações
+                    dos cards de post.
                 */}
                 {posts.map(post => (
+
+                  
+                  
+
+                  /* chamamos um elemento Post que importamos na linha 128 */
                   <Post
                     /*
                       A expressão abaixo é bem intuitíva com exeção do "?".
@@ -394,12 +419,13 @@ export const Home = () => {
                     title={post?.title}
                     /* author={`${post?.author?.firstName} ${post?.author?.lastName}`} */
                     description={post?.description}
-                    averangePrice = {post?.averangePrice}
+                    averagePrice = {post?.averagePrice}
                     measurement = {post?.measurement}
                     /* handleOpenEditModal captura o id do card clicado */
                     openShowModal = {() => console.log(post?.id)}
                     openEditModal={() => handleOpenEditModal(post?._id)}
                     openDeleteModal={() => handleOpenDeleteModal(post?._id)}
+                    
                   />
                 ))}
               </Flex>
