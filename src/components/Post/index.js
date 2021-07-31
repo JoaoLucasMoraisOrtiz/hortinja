@@ -24,7 +24,7 @@ const Post = (props) => {
 
   let mainTitle = props.title.split(' ')
 
-  console.log(mainTitle)
+  /*   console.log(mainTitle) */
 
 
 
@@ -35,50 +35,54 @@ const Post = (props) => {
     <Flex
       key={props.key}
       bg='#FFF'
-      width = '30%'
+      width='fit-content'
       borderRadius='20px'
       justifyContent='center'
-      flexDirection = 'column'
-      padding = '1%'
+      flexDirection='column'
+      padding='1%'
       mb='3'
       mt={[0, 0, 3, 3]}
       boxShadow='rgb(0, 0, 0, 0.3) 10px 10px 30px 1px'
-      margin = '2%'
+      margin='2%'
     >
-    <Flex 
-      width = '100%'
-    >
-      <Image
-        whidth='100%'
-        src={PostBg}
-      />
       <Flex
-        position = "absolute"
-        flexDirection = 'row'
-        padding = '1%'
-        alignItens = 'center'
+        min-width='100%'
+        name = 'parent1'
+        justifyContent='center'
+        /* alignContent='center' */
       >
         <Image
-          src={props.url}
-
-          width = '16vh'
-          height = '16vh'
-
-          borderRadius='50%'
-          fallbackSrc={ImageNotFound}
-          marginLeft = '1%'
-          marginTop = '3%'
+          whidth='100%'
+          src={PostBg}
         />
-        <Text
-          align ='right'
-          color = '#FFF'
-          fontSize = '36'
-          marginLeft="5%"
+        <Flex
+          position="absolute"
+          flexDirection='row'
+          padding='1%'
+          alignItens='center'
+          name ='parent2'
         >
-          <b>{mainTitle["0"]}</b>
-        </Text>
+          <Image
+            src={props.url}
+
+            width='16vh'
+            height='16vh'
+
+            borderRadius='50%'
+            fallbackSrc={ImageNotFound}
+            marginLeft='1%'
+            marginTop='3%'
+          />
+          <Text
+            align='right'
+            color='#FFF'
+            fontSize='36'
+            marginLeft="5%"
+          >
+            <b>{mainTitle["0"]}</b>
+          </Text>
+        </Flex>
       </Flex>
-    </Flex>
       {/* conteúdo do card */}
       <Box>
         <Text><b>{props.title}</b></Text>
@@ -89,24 +93,24 @@ const Post = (props) => {
       <Flex justifyContent='left' >
         <Button
           onClick={props.openEditModal}
-          variant = 'ghost'
-          height = 'fit-content'
-          width ='fit-content'
+          variant='ghost'
+          height='fit-content'
+          width='fit-content'
         >
-          <EditIcon/>
+          <EditIcon />
         </Button>
         <Button
           colorScheme='red'
           onClick={props.openDeleteModal}
-          variant = 'ghost'
-          height = 'fit-content'
-          width ='fit-content'
+          variant='ghost'
+          height='fit-content'
+          width='fit-content'
         >
-          <DeleteIcon/>
+          <DeleteIcon />
         </Button>
         <Box
-          display = 'inline-flex'
-        >  
+          display='inline-flex'
+        >
           <Text fontSize='smaller'><b>Média</b> R$</Text>
           <Text
             fontSize='x-large'

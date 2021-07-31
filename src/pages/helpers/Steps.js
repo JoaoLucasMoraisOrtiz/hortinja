@@ -1,8 +1,13 @@
 /* cria a func. interna _count, que recebe um JSON de post da API */
 import count from './Count'
 
-const steps = (allCategorys) =>{
-    allCategorys = allCategorys
+const steps = async (allCategorys) =>{
+    try{
+        allCategorys = await allCategorys
+    }catch(error){
+        console.log(`steps error: ${error}`)
+    }
+
 
     /* metodo filter só retorna se o resultado da func. for true */
     var categorys = allCategorys.filter(function(that, i) {

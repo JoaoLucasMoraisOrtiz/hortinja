@@ -1,8 +1,12 @@
-const count = (post) =>{
+const count = async (post) =>{
 
     let allCategorys
 
-    post = post
+    try{
+        post = await post
+    }catch(error){
+        console.log(`count error: ${error}`)
+    }
 
     console.log(`log de post ${post}`)
 

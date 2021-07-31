@@ -99,8 +99,7 @@ import {
   Flex,
   //renderiza uma imágem
   Image,
-  //renderiza um icone que funciona como botão
-  IconButton,
+
   //renderiza uma <div></div>
   Box,
   //renderiza um <p></p>
@@ -112,7 +111,7 @@ import {
   //gera um spinner, ou seja, um "logo de carregando"
   Spinner,
   //categorias de seleção
-  Select
+  Select,
 } from "@chakra-ui/react"
 
 //importa Logo de assets/logo.svg
@@ -121,23 +120,20 @@ import Logo from '../../assets/logo.svg'
 //importa o plano de fundo do card central de assets/Background1.svg
 import Bg1 from '../../assets/Background1.svg'
 
-//importa o AddIcon (um icone de +) da biblioteca do chackra
-import { AddIcon } from '@chakra-ui/icons'
-
 //importa Post de components
 import { Post } from '../../components'
 
 //importa o PostModal
 import PostModal from './PostModal'
 
+import CategoryModal from './CategoryModal'
+
 //importa DeleteModal
 import DeleteModal from './DeleteModal'
 
 //importa Api
-import api from '../../services/api' 
+import api from '../../services/api'
 
-import steps from '../helpers/Steps'
-import count from '../helpers/Count'
 
 
 /* exporta a constante Home, que recebe uma função */
@@ -157,6 +153,12 @@ export const Home = () => {
 
   /* loading e setLoading recebem o estado de false */
   const [loading, setLoading] = useState(false)
+
+  const [categories, setCategories] = useState([])
+
+  const [categoriesModal, setCategoriesModal] = useState(false)
+
+  const [selectedCategory, setSelectedCategory] = useState(null)
 
   /* 
                     -=-=-=-=-=-=-= INTEGRAÇÂO COM A API -=-=-=-=-=-=-=
@@ -178,8 +180,8 @@ export const Home = () => {
       .then(res => {
         /* quando funciona setPosts recebe res.data */
         setPosts(res.data)
-        console.log(posts)
-      })
+/*         console.log(posts)
+ */      })
 
       /* como não tratamos erros no then, os trataremos no catch */
       .catch(err => {
@@ -216,21 +218,33 @@ export const Home = () => {
     setPostModal(true)
   }
 
-  useEffect(() => {
-    loadPosts()
-   /*  let allcategorys = count(posts)
-    console.log(allcategorys) */
-    console.log(`posts de useEffect${posts.categoryId}`)
-    let categorys = steps(posts)
-    console.log(categorys)
-  }, [])
- 
+  /* loadCategories async  */
+  const loadCategories = async () => {
+    const response = await api.get('/category')
+    setCategories(response.data)
+  }
+/* 
+  const bringPosts = async () => {
+    const response = await api.get('/posts')
+    setPosts(response.data)
+  } */
+
+  /*   useEffect(() => {
+      loadPosts()
+      let allcategorys = count(posts)
+      console.log(` foto do post${posts}`)
+      console.log(`posts de useEffect${posts.categoryId}`)
+      let categorys = steps(posts)
+      console.log(categorys)
+    }, []) */
+
 
   /*
     sempre que qualquer estado se mudar (pois deixamos o segundo parâmetro vazio),
     ele executa a function de loadPosts()
   */
   useEffect(() => {
+    loadCategories()
     loadPosts()
   }, [])
 
@@ -246,37 +260,37 @@ export const Home = () => {
         alignItems='center'
         paddingRight='25vh'
         paddingLeft='25vh'
-        
+
       >
-        
-          {/* logo do hortinjas */}
-          <Image src={Logo} alt='Hortinja Logo' marginX='4'/>
-          <Flex>
-              
-            {/* filtro de categorias */}
-            <Select
-              placeholder='Selecione uma categoria'
-              id='author'
-              name='author'
-              borderRadius = '32px'
-              width = '220px'
-              maxWidth = '100%'
-              colorScheme= '#D9D2CF'
-            >
-            </Select>
+
+        {/* logo do hortinjas */}
+        <Image src={Logo} alt='Hortinja Logo' marginX='4' />
+        <Flex>
+
+          {/* filtro de categorias */}
+          <Select
+            placeholder='Selecione uma categoria'
+            id='author'
+            name='author'
+            borderRadius='32px'
+            width='220px'
+            maxWidth='100%'
+            backgroundColor='#D9D2CF'
+          >
+          </Select>
 
 
-            {/* busca de hortaliças */}
-            <Select
-              placeholder='Buscar hortaliça'
-              id='author'
-              name='author'
-              borderRadius = '32px'
-              width = '220px'
-              maxWidth = '100%'
-              colorScheme= '#D9D2CF'
-            ></Select>
-          </Flex>
+          {/* busca de hortaliças */}
+          <Select
+            placeholder='Buscar hortaliça'
+            id='author'
+            name='author'
+            borderRadius='32px'
+            width='220px'
+            maxWidth='100%'
+            backgroundColor='#D9D2CF'
+          ></Select>
+        </Flex>
 
       </Flex>
       {/* uma div flex pai, que contem os elementos do card */}
@@ -285,10 +299,10 @@ export const Home = () => {
         flexDirection='column'
         justifyContent='center'
         minHeight='100%'
-        colorScheme = '#ff0000'
+        background-color='#ff0000'
         paddingX={['5%', '5%', '5%', '5%']}
       >
-       
+
 
         {/* Início do Box de Ações lateral */}
         <Flex
@@ -307,66 +321,85 @@ export const Home = () => {
               borderRadius='35px'
             >
               {/* texto do título */}
-              <Image src={Bg1} alt="plano de fundo" width="100%" height="100%"/>
-              
+              <Image src={Bg1} alt="plano de fundo" width="100%" height="100%" />
+
               <Flex
                 flexDirection='row'
-                justifyContent = 'space-between'
-                height = '100%'
-                width = '100%'
+                justifyContent='space-between'
+                height='100%'
+                width='100%'
                 backgroundColor='00000'
-                position = 'absolute'
+                position='absolute'
               >
 
                 <Flex
-                backgroundColor='rgba( 255, 255, 255, 0.9)'
-                height = '80%'
-                width = '100%'
-                marginTop = '10%'
-                borderRadius = '32px'
-                marginX='2%'
-                flexDirection='column'
-                padding ='20px'
+                  backgroundColor='rgba( 255, 255, 255, 0.9)'
+                  height='80%'
+                  width='100%'
+                  marginTop='10%'
+                  borderRadius='32px'
+                  marginX='2%'
+                  flexDirection='column'
+                  padding='20px'
                 >
                   <Text fontWeight='800'>registros</Text>
                   <Text>Número de registros da horta</Text>
 
                   <Text
                     fontSize='42'
-                    marginLeft = '45%'
+                    marginLeft='45%'
                   >#29</Text>
 
                 </Flex>
 
                 <Flex
-                backgroundColor='rgba( 255, 255, 255, 0.9)'
-                height = '80%'
-                width = '100%'
-                marginTop = '10%'
-                borderRadius = '32px'
-                marginX='2%'
-                flexDirection='column'
+                  backgroundColor='rgba( 255, 255, 255, 0.9)'
+                  height='80%'
+                  width='100%'
+                  marginTop='10%'
+                  borderRadius='32px'
+                  marginX='2%'
+                  flexDirection='column'
+                  padding='20px'
                 >
                   <Text fontWeight='800'>registros</Text>
                   <Text>Número de registros da horta</Text>
 
                   <Text
                     fontSize='42'
-                    marginLeft = '45%'
+                    marginLeft='45%'
                   >
-                      #4395
+                    #4395
                   </Text>
                 </Flex>
-
+                
               </Flex>
               
             </Flex>
+
+            
+            <Flex
+              flexDirection='row'
+              justfyContent='center'
+              width='100%'
+              aling='center'
+            >
+              <Button
+                onClick={setCategoriesModal(true)}
+                
+              >Nova Categoria</Button>
+              <Button>Nova Hortaliça</Button>
+            </Flex>
           </Flex>
+
+          <Divider colorScheme='red' size='12' />
+
+
           {/* Início dos Posts */}
-          <Box 
-            width={['100%', 3/4, 3/4, 3/4]}
+          <Box
+            width={['100%', 3 / 4, 3 / 4, 3 / 4]}
             minHeight='85vh'
-            justifyContent='center'
+            justifyContent='column'
             alignItems='center'
           >
             {/* if(loading){
@@ -376,17 +409,16 @@ export const Home = () => {
                 } */}
             {loading ? (
               <Flex justifyContent='center' alignItems='center' height='50vh'>
-                <Spinner color='green.500'/>
+                <Spinner color='green.500' />
               </Flex>
             ) : (
-              <Flex 
-              flexDirection='row'
-              marginTop = '30%'
-              marginLeft={['0', '4', '4', '4']}
+                <Box
+                  marginTop='30%'
+                  marginLeft={['0', '4', '4', '4']}
+                  name='parent'
+                >
 
-              >
-                
-                {/*
+                  {/*
                   dando um map em posts (linha 152);
                     o map chama uma callback, que deve ser uma função, que receberá por parâmetro
                     um item de um array (um por vez, em sequencia de ordem crescente).
@@ -398,38 +430,62 @@ export const Home = () => {
                     retorna quando fazemos uma req. "GET" em /posts (vide: API/src/routes).
                     resumindo, "posts" é uma array onde cada elemento é um JSON com as informações
                     dos cards de post.
-                */}
-                {posts.map(post => (
+                  */}
+                  {(categories[0] && posts[0]) && categories.map(category => {
 
-                  
-                  
+                    const postsWithThisCategory = posts.filter(post => post.categoryId === category._id)
+                    console.log(postsWithThisCategory)
 
-                  /* chamamos um elemento Post que importamos na linha 128 */
-                  <Post
-                    /*
-                      A expressão abaixo é bem intuitíva com exeção do "?".
-                      Este ponto de exclamação quer dizer que irá primeiro se verificar se existe
-                      o proximo atributo(no primeiro caso, o _id), para não acontecer de que um atraso
-                      na internet, faça com que os posts fiquem como undefined
-                     */
-                    key={post?._id}
-                    /* url da imágem */
-                    url={post?.url}
-                    /* titulo do post */
-                    title={post?.title}
-                    /* author={`${post?.author?.firstName} ${post?.author?.lastName}`} */
-                    description={post?.description}
-                    averagePrice = {post?.averagePrice}
-                    measurement = {post?.measurement}
-                    /* handleOpenEditModal captura o id do card clicado */
-                    openShowModal = {() => console.log(post?.id)}
-                    openEditModal={() => handleOpenEditModal(post?._id)}
-                    openDeleteModal={() => handleOpenDeleteModal(post?._id)}
-                    
-                  />
-                ))}
-              </Flex>
-            )}
+                    return (
+                      <>
+
+                        <Flex flexDirection='column' >
+                          <Flex
+                            flexDirection='column'
+                          >
+                            <Text
+                              align='left'
+                              color='#000'
+                              fontSize='36'
+                            /* marginLeft="5%" */
+                            ><b>{`${category.name}`}</b></Text>
+
+                            <Flex
+                              flexDirection='row'
+                            >
+                              {postsWithThisCategory.map(post => (
+
+                                <Post
+                                  /*
+                                    A expressão abaixo é bem intuitíva com exeção do "?".
+                                    Este ponto de exclamação quer dizer que irá primeiro se verificar se existe
+                                    o proximo atributo(no primeiro caso, o _id), para não acontecer de que um atraso
+                                    na internet, faça com que os posts fiquem como undefined
+                                  */
+                                  key={post?._id}
+                                  /* url da imágem */
+                                  url={post?.url}
+                                  /* titulo do post */
+                                  title={post?.title}
+                                  /* author={`${post?.author?.firstName} ${post?.author?.lastName}`} */
+                                  description={post?.description}
+                                  averagePrice={post?.averagePrice}
+                                  measurement={post?.measurement}
+                                  /* handleOpenEditModal captura o id do card clicado */
+                                  openShowModal={() => console.log(post?.id)}
+                                  openEditModal={() => handleOpenEditModal(post?._id)}
+                                  openDeleteModal={() => handleOpenDeleteModal(post?._id)}
+                                  marginY='10%'
+                                />))}
+                            </Flex>
+                          </Flex>
+                        </Flex>
+                      </>
+                    )
+                  }
+                  )}
+                </Box>
+              )}
           </Box>
         </Flex>
         {/* Início do Footer */}
@@ -441,10 +497,10 @@ export const Home = () => {
       </Flex>
 
       {/* PostModal foi importado no começo do arquivo */}
-      <PostModal 
+      <PostModal
         /*
           se postModal, que é um useStatus da linha 133/134, com seu valor original é false for true,
-          significa que tocamos no botão de criar um novo post
+          significa que tocamos no botão de criar ou editar um novo post
         */
         isOpen={postModal}
 
@@ -480,7 +536,24 @@ export const Home = () => {
         postId={selectedPost}
         /* loadPosts = loadPosts, */
         loadPosts={loadPosts}
+
+        
       />
+
+            {/* CategoryModal foi importado no começo do arquivo */}
+      <CategoryModal
+        
+        isOpen={categoriesModal}
+
+        onClose={() => {
+          setCategoriesModal(false)
+          setSelectedPost(null)
+        }}
+        postId={selectedPost}
+        loadPosts={loadPosts}
+      />
+
+
     </>
   )
 }

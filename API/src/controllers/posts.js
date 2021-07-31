@@ -58,7 +58,6 @@ const methods = {
     // função assincrona - async - create, recebe dois argumentos: request, response, para criar posts
     async create(request, response) {
 
-
         const { title, url,  color, categoryId, nutritional, averagePrice, measurement, description } = request.body
 
         //constante post esta recebendo um novo Post
