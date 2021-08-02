@@ -206,7 +206,7 @@ const PostModal = (props) => {
       onClose={props.onClose}
       isCentered
       backgroundColor='#D9D2CF'
-      position='absolute'
+      /* position='absolute' */
     >
       <ModalOverlay />
 
@@ -243,7 +243,7 @@ const PostModal = (props) => {
             <Flex
               backgroundColor='#FFF'
               borderRadius='32px'
-              justifyContent = 'center'
+              justifyContent='center'
               whidth='fit-content'
             >
               <Box>
@@ -261,14 +261,14 @@ const PostModal = (props) => {
                           name='category'
                           value={categoryId}
                           onChange={(e) => setCategoryId(e.target.value)}
-                          backgroundColor = '#D9D2CF'
-                          color = 'black'
-                          borderRadius = '32px'
+                          backgroundColor='#D9D2CF'
+                          color='black'
+                          borderRadius='32px'
                           fontWeight='600'
-                          whidth = '100%'
+                          whidth='100%'
                         >
                           {categorys.map(category => (
-                            
+
                             <option
                               key={category?._id}
                               value={category?._id}
@@ -286,24 +286,25 @@ const PostModal = (props) => {
                           name='title'
                           value={title}
                           onChange={(e) => setTitle(e.target.value)}
-                          backgroundColor = '#D9D2CF'
-                          color = 'black'
-                          borderRadius = '32px'
-                          whidth = '100%'
+                          backgroundColor='#D9D2CF'
+                          color='black'
+                          borderRadius='32px'
+                          whidth='100%'
                         />
                       </FormControl>
                       <FormControl mt='4'>
                         <FormLabel>Url da Imagem</FormLabel>
                         <Input
+                          type = 'text'
                           placeholder='Link da sua imagem'
                           id='url'
                           name='url'
                           value={url}
                           onChange={(e) => setUrl(e.target.value)}
-                          backgroundColor = '#D9D2CF'
-                          color = 'black'
-                          borderRadius = '32px'
-                          whidth = '100%'
+                          backgroundColor='#D9D2CF'
+                          color='black'
+                          borderRadius='32px'
+                          whidth='100%'
                         />
                       </FormControl>
                       <FormControl mt='4'>
@@ -314,10 +315,10 @@ const PostModal = (props) => {
                           name='color'
                           value={color}
                           onChange={(e) => setUrl(e.target.value)}
-                          backgroundColor = '#D9D2CF'
-                          color = 'black'
-                          borderRadius = '32px'
-                          whidth = '100%'
+                          backgroundColor='#D9D2CF'
+                          color='black'
+                          borderRadius='32px'
+                          whidth='100%'
                         />
                       </FormControl>
                       <FormControl mt='4'>
@@ -328,10 +329,10 @@ const PostModal = (props) => {
                           name='nutritional'
                           value={nutritional}
                           onChange={(e) => setUrl(e.target.value)}
-                          backgroundColor = '#D9D2CF'
-                          color = 'black'
-                          borderRadius = '32px'
-                          whidth = '100%'
+                          backgroundColor='#D9D2CF'
+                          color='black'
+                          borderRadius='32px'
+                          whidth='100%'
                         />
                       </FormControl>
                       <FormControl mt='4'>
@@ -342,10 +343,10 @@ const PostModal = (props) => {
                           name='averagePrice'
                           value={averagePrice}
                           onChange={(e) => setUrl(e.target.value)}
-                          backgroundColor = '#D9D2CF'
-                          color = 'black'
-                          borderRadius = '32px'
-                          whidth = '100%'
+                          backgroundColor='#D9D2CF'
+                          color='black'
+                          borderRadius='32px'
+                          whidth='100%'
                         />
                       </FormControl>
                       <FormControl mt='4'>
@@ -356,10 +357,10 @@ const PostModal = (props) => {
                           name='measurement'
                           value={measurement}
                           onChange={(e) => setUrl(e.target.value)}
-                          backgroundColor = '#D9D2CF'
-                          color = 'black'
-                          borderRadius = '32px'
-                          whidth = '100%'
+                          backgroundColor='#D9D2CF'
+                          color='black'
+                          borderRadius='32px'
+                          whidth='100%'
                         />
                       </FormControl>
                       <FormControl mt='4'>
@@ -370,10 +371,10 @@ const PostModal = (props) => {
                           name='description'
                           value={description}
                           onChange={(e) => setDescription(e.target.value)}
-                          backgroundColor = '#D9D2CF'
-                          color = 'black'
-                          borderRadius = '32px'
-                          whidth = '100%'
+                          backgroundColor='#D9D2CF'
+                          color='black'
+                          borderRadius='32px'
+                          whidth='100%'
                         />
                       </FormControl>
                     </>

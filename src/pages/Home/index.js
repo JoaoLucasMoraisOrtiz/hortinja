@@ -114,6 +114,7 @@ import {
   Select,
 } from "@chakra-ui/react"
 
+import { Icon } from "@chakra-ui/react"
 //importa Logo de assets/logo.svg
 import Logo from '../../assets/logo.svg'
 
@@ -156,9 +157,9 @@ export const Home = () => {
 
   const [categories, setCategories] = useState([])
 
-  const [categoriesModal, setCategoriesModal] = useState(false)
+  /* const [categoriesModal, setCategoriesModal] = useState(false)
 
-  const [selectedCategory, setSelectedCategory] = useState(null)
+  const [selectedCategory, setSelectedCategory] = useState(null) */
 
   /* 
                     -=-=-=-=-=-=-= INTEGRAÇÂO COM A API -=-=-=-=-=-=-=
@@ -223,6 +224,8 @@ export const Home = () => {
     const response = await api.get('/category')
     setCategories(response.data)
   }
+
+  
 /* 
   const bringPosts = async () => {
     const response = await api.get('/posts')
@@ -248,6 +251,25 @@ export const Home = () => {
     loadPosts()
   }, [])
 
+  var hortlength = categories.length == 0 ? 0 : categories.length + 1
+
+  /* function prices() {
+    posts.map(prices => {
+      console.log(`linha 258: ${prices}`)
+      let value = prices.averagePrice
+      console.log(`linha 260 ${value}`)
+      return value
+    })
+  }
+
+  
+
+  var totalPrice = prices()
+  console.log(`linha 267 ${totalPrice}`)
+  var hortvalue = totalPrice.map(values => {
+    let totalPrice
+    totalPrice = totalPrice + values
+  }) */
   /* retorna... */
   return (
     <>
@@ -348,7 +370,7 @@ export const Home = () => {
                   <Text
                     fontSize='42'
                     marginLeft='45%'
-                  >#29</Text>
+                  >{hortlength}</Text>
 
                 </Flex>
 
@@ -362,14 +384,14 @@ export const Home = () => {
                   flexDirection='column'
                   padding='20px'
                 >
-                  <Text fontWeight='800'>registros</Text>
-                  <Text>Número de registros da horta</Text>
+                  <Text fontWeight='800'>Valor total</Text>
+                  <Text>Preço total da horta</Text>
 
                   <Text
                     fontSize='42'
                     marginLeft='45%'
                   >
-                    #4395
+                    teste
                   </Text>
                 </Flex>
                 
@@ -379,16 +401,22 @@ export const Home = () => {
 
             
             <Flex
-              flexDirection='row'
+              flexDirection='space-between'
               justfyContent='center'
               width='100%'
               aling='center'
             >
               <Button
-                onClick={setCategoriesModal(true)}
-                
+                /* onClick={setCategoriesModal(true)} */
+                colorScheme ='green'
+                borderRadius = '32px'
               >Nova Categoria</Button>
-              <Button>Nova Hortaliça</Button>
+              <Button
+                /* onClick = {setPostModal(true)} */
+                colorScheme ='green'
+                borderRadius = '32px'
+                onClick={() => setPostModal(true)}
+              >Nova Hortaliça</Button>
             </Flex>
           </Flex>
 
@@ -540,20 +568,8 @@ export const Home = () => {
         
       />
 
-            {/* CategoryModal foi importado no começo do arquivo */}
-      <CategoryModal
-        
-        isOpen={categoriesModal}
-
-        onClose={() => {
-          setCategoriesModal(false)
-          setSelectedPost(null)
-        }}
-        postId={selectedPost}
-        loadPosts={loadPosts}
-      />
-
 
     </>
   )
+
 }
